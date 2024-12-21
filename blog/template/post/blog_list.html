@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Blogs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+        }
+        .post {
+            background-color: white;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .post h2 {
+            margin: 0 0 10px;
+        }
+        .post p {
+            margin: 10px 0;
+        }
+        .post img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .back-link {
+            text-decoration: none;
+            color: #007BFF;
+            font-size: 16px;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Lista de Blogs</h1>
+    
+    {% if posts %}
+        {% for post in posts %}
+        <div class="post">
+            <h2>{{ post.title }}</h2>
+            <p>{{ post.content|truncatewords:20 }}</p>
+            {% if post.image %}
+                <img src="{{ post.image.url }}" alt="Imagen del post">
+            {% endif %}
+            <a href="{% url 'edit_post' post.id %}" class="back-link">Editar</a>
+            <a href="{% url 'delete_post' post.id %}" class="btn btn-danger">Eliminar</a>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>No hay publicaciones disponibles.</p>
+    {% endif %}
+    
+    <p><a href="{% url 'agregar_post' %}" class="back-link">Agregar nueva publicación</a></p>
+</div>
+
+</body>
+</html>
